@@ -16,9 +16,26 @@ object Server extends App {
 
 class TestServer extends Service[HttpRequest, HttpResponse] {
   @Trace(dispatcher = true)
-  def apply(request: HttpRequest): Future[HttpResponse] = {
-    val response = Response()
-    response.setContentString("Hello from " + request.getUri)
-    Future.value(response)
+  def apply(request: HttpRequest): Future[HttpResponse] = for {
+    r1 <- Future {
+      val response = Response()
+      response.setContentString("Hello from " + request.getUri)
+      response
+    }
+    r2 <- traced(r1)
+    r3 <- untraced(r2)
+  } yield r3
+
+  @Trace
+  def traced(response: Response): Future[Response] = Future {
+    Thread.sleep(50)
+    response.headers.set("X-Traced", "true")
+    response
+  }
+
+  def untraced(response: Response): Future[Response] = Future {
+    Thread.sleep(25)
+    response.headers.set("X-Untraced", "true")
+    response
   }
 }
