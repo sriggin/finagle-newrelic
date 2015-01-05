@@ -1,5 +1,5 @@
 
-
+import com.newrelic.api.agent._
 import com.twitter.util._
 import com.twitter.finagle._
 import com.twitter.finagle.http.{ Request, Response }
@@ -15,6 +15,7 @@ object Server extends App {
 }
 
 class TestServer extends Service[HttpRequest, HttpResponse] {
+  @Trace(dispatcher = true)
   def apply(request: HttpRequest): Future[HttpResponse] = {
     val response = Response()
     response.setContentString("Hello from " + request.getUri)

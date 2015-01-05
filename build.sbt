@@ -8,7 +8,9 @@ name := "finagle-nr"
 version := "0.0.1-SNAPSHOT"
 
 libraryDependencies ++= Seq(
-  "com.twitter" %% "finagle-http" % "6.24.0"
+  "com.twitter" %% "finagle-http" % "6.24.0",
+  "com.newrelic.agent.java" % "newrelic-agent" % "3.12.1",
+  "com.newrelic.agent.java" % "newrelic-api" % "3.12.1"
 )
 
 packageArchetype.java_application
