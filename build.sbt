@@ -1,3 +1,5 @@
+import NativePackagerKeys._
+
 scalaVersion := "2.10.4"
 
 name := "finagle-nr"
