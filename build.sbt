@@ -1,3 +1,4 @@
+import com.typesafe.sbt.SbtNativePackager._
 import NativePackagerKeys._
 
 scalaVersion := "2.10.4"
@@ -10,4 +11,4 @@ libraryDependencies ++= Seq(
   "com.twitter" %% "finagle-http" % "6.24.0"
 )
 
-
+packageArchetype.java_application
