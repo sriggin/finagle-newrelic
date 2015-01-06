@@ -24,18 +24,18 @@ object Server extends App {
 class TestServer extends Service[HttpRequest, HttpResponse] {
   @Trace(dispatcher = true)
   def apply(request: HttpRequest): TwitterFuture[HttpResponse] = TwitterUtils.scala2Twitter {
-    outer(request)
+    outer(Request(request))
   }
 
   @Trace
-  def outer(request): Future[Response] = for {
+  def outer(request: Request): Future[Response] = for {
     r1 <- handle(request)
     r2 <- traced(r1)
     r3 <- untraced(r2)
   } yield r3
 
   @Trace
-  def handle(request): Future[Response] = Future {
+  def handle(request: Request): Future[Response] = Future {
     NewRelic.getAgent().getTransaction()
     val response = Response()
     response.setContentString("Hello from " + request.getUri)
