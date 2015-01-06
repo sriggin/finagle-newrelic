@@ -14,3 +14,16 @@ libraryDependencies ++= Seq(
 )
 
 packageArchetype.java_application
+
+scalacOptions ++= Seq(
+  "-feature"
+)
+
+javaOptions ++= Seq(
+  "-Xmx384m",
+  "-Xss512k",
+  "-XX:+UseCompressedOops",
+  "-javaagent:target/universal/stage/lib/com.newrelic.agent.java.newrelic-agent-3.12.1.jar"
+)
+
+fork in run := true
