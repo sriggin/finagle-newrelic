@@ -9,7 +9,6 @@ version := "0.0.1-SNAPSHOT"
 
 libraryDependencies ++= Seq(
   "com.twitter" %% "finagle-http" % "6.24.0",
-  "com.newrelic.agent.java" % "newrelic-agent" % "3.12.1",
   "com.newrelic.agent.java" % "newrelic-api" % "3.12.1"
 )
 
@@ -23,7 +22,8 @@ javaOptions ++= Seq(
   "-Xmx384m",
   "-Xss512k",
   "-XX:+UseCompressedOops",
-  "-javaagent:target/universal/stage/lib/com.newrelic.agent.java.newrelic-agent-3.12.1.jar"
+  "-javaagent:libs/newrelic-agent.jar"
+
 )
 
 fork in run := true
