@@ -22,17 +22,20 @@ object Server extends App {
 
 //finagle service that handles server cals
 class TestServer extends Service[HttpRequest, HttpResponse] {
-  @Trace(dispatcher = true)
   def apply(request: HttpRequest): TwitterFuture[HttpResponse] = TwitterUtils.scala2Twitter {
     outer(Request(request))
   }
 
-  @Trace
-  def outer(request: Request): Future[Response] = for {
-    r1 <- handle(request)
-    r2 <- traced(r1)
-    r3 <- untraced(r2)
-  } yield r3
+  @Trace(dispatcher = true)
+  def outer(request: Request): Future[Response] = {
+    NewRelic.getAgent().getTransaction()
+    NewRelic.setTransactionName(null, "Main")
+    for {
+      r1 <- handle(request)
+      r2 <- traced(r1)
+      r3 <- untraced(r2)
+    } yield r3
+  }
 
   @Trace
   def handle(request: Request): Future[Response] = Future {
