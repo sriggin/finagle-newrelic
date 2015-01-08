@@ -51,7 +51,7 @@ common: &default_settings
   # The levels in increasing order of verboseness are:
   #   off, severe, warning, info, fine, finer, finest
   # Default is info.
-  log_level: finest
+  log_level: finer
 
   # Log all data sent to and from New Relic in plain text.
   # This setting is dynamic, so changes do not require restarting your application.
@@ -117,7 +117,12 @@ common: &default_settings
     # A comma separated list of attribute keys whose values should 
     # not be sent to New Relic.
     #exclude:
-    
+
+  scala_instrumentation:
+    enabled: false  
+  
+  netty_instrumentation: 
+    enabled: false
 
   # Transaction tracer captures deep information about slow
   # transactions and sends this to the New Relic service once a
@@ -125,7 +130,6 @@ common: &default_settings
   # the transactions including any SQL statements issued.
   transaction_tracer:
 
-    # Transaction tracer is enabled by default. Set this to false to turn it off.
     # This feature is not available to Lite accounts and is automatically disabled.
     # Default is true.
     enabled: true
@@ -239,6 +243,14 @@ common: &default_settings
     # Set this attribute to false to turn off this behavior.
     auto_instrument: true
 
+
+  class_transformer:
+    scala_instrumentation:
+      enabled: true #false
+
+
+    netty_instrumentation:
+      enabled: false
 
 # Application Environments
 # ------------------------------------------
